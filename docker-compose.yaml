@@ -8,6 +8,6 @@ services:
       dockerfile: Dockerfile
     image: bs-map-of-the-day
     restart: unless-stopped
-    env_file: .local/.env
+    env_file: .env
     volumes:
       - ./.db:/usr/src/app/.db/
