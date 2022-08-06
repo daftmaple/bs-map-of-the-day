@@ -1,8 +1,13 @@
 import sqlite3
+from os.path import exists
 
+DB_PATH = ".db/store.db"
+
+if not exists(DB_PATH):
+	exit()
 
 def get_user(discord_id=None, beatleader_id=None):
-	conn = sqlite3.connect("store.db")
+	conn = sqlite3.connect(DB_PATH)
 	conn.row_factory = sqlite3.Row
 	c = conn.cursor()
 
@@ -22,7 +27,7 @@ def get_user(discord_id=None, beatleader_id=None):
 		return dict(user_data)
 
 def get_all_users():
-	conn = sqlite3.connect("store.db")
+	conn = sqlite3.connect(DB_PATH)
 	conn.row_factory = sqlite3.Row
 	c = conn.cursor()
 
@@ -38,7 +43,7 @@ def get_all_users():
 		return [dict(it) for it in user_data]
 
 def insert_user(discord_id, beatleader_id):
-	conn = sqlite3.connect("store.db")
+	conn = sqlite3.connect(DB_PATH)
 	c = conn.cursor()
 
 	c.execute("INSERT INTO users (discord_id, beatleader_id, created_at, level, exp) " \
@@ -48,7 +53,7 @@ def insert_user(discord_id, beatleader_id):
 	conn.close()
 
 def update_user(discord_id, beatleader_id=None, level=None, exp=None):
-	conn = sqlite3.connect("store.db")
+	conn = sqlite3.connect(DB_PATH)
 	c = conn.cursor()
 
 	if beatleader_id == "":
@@ -65,7 +70,7 @@ def update_user(discord_id, beatleader_id=None, level=None, exp=None):
 	conn.close()
 
 def get_leaderboard(rowid):
-	conn = sqlite3.connect("store.db")
+	conn = sqlite3.connect(DB_PATH)
 	conn.row_factory = sqlite3.Row
 	c = conn.cursor()
 
@@ -81,7 +86,7 @@ def get_leaderboard(rowid):
 		return dict(lb_data)
 
 def get_leaderboards():
-	conn = sqlite3.connect("store.db")
+	conn = sqlite3.connect(DB_PATH)
 	conn.row_factory = sqlite3.Row
 	c = conn.cursor()
 
@@ -97,7 +102,7 @@ def get_leaderboards():
 		return [dict(it) for it in lbs]
 
 def get_active_leaderboards():
-	conn = sqlite3.connect("store.db")
+	conn = sqlite3.connect(DB_PATH)
 	conn.row_factory = sqlite3.Row
 	c = conn.cursor()
 
@@ -113,7 +118,7 @@ def get_active_leaderboards():
 		return [dict(it) for it in lbs]
 
 def get_old_leaderboards():
-	conn = sqlite3.connect("store.db")
+	conn = sqlite3.connect(DB_PATH)
 	conn.row_factory = sqlite3.Row
 	c = conn.cursor()
 
@@ -129,7 +134,7 @@ def get_old_leaderboards():
 		return [dict(it) for it in lbs]
 
 def insert_leaderboard(lb_id, s_id, s_hash, s_name, s_subname, s_author, s_mapper, m_diff, m_mode, s_time, e_time, desc=""):
-	conn = sqlite3.connect("store.db")
+	conn = sqlite3.connect(DB_PATH)
 	c = conn.cursor()
 
 	c.execute("INSERT INTO leaderboards (leaderboard_id, song_id, song_hash, song_name, song_subname, song_author, song_mapper, map_diff, map_mode, start_time, end_time, active, description) " \
@@ -139,7 +144,7 @@ def insert_leaderboard(lb_id, s_id, s_hash, s_name, s_subname, s_author, s_mappe
 	conn.close()
 
 def update_leaderboard(rowid, active=None, msg_id=None, desc=None):
-	conn = sqlite3.connect("store.db")
+	conn = sqlite3.connect(DB_PATH)
 	c = conn.cursor()
 
 	if active is not None:
@@ -153,7 +158,7 @@ def update_leaderboard(rowid, active=None, msg_id=None, desc=None):
 	conn.close()
 
 def insert_score(lb_ref, lb_id, d_id, bl_id, rank, acc, misses):
-	conn = sqlite3.connect("store.db")
+	conn = sqlite3.connect(DB_PATH)
 	c = conn.cursor()
 
 	c.execute("INSERT INTO scores (leaderboard_ref, leaderboard_id, discord_id, beatleader_id, rank, accuracy, misses) " \
@@ -163,7 +168,7 @@ def insert_score(lb_ref, lb_id, d_id, bl_id, rank, acc, misses):
 	conn.close()
 
 def get_scores(lb_rowid=None, d_id=None):
-	conn = sqlite3.connect("store.db")
+	conn = sqlite3.connect(DB_PATH)
 	conn.row_factory = sqlite3.Row
 	c = conn.cursor()
 

@@ -1,0 +1,6 @@
+.local/
+.db/
+Dockerfile
+docker-compose.yaml
+LICENSE
+README.md
