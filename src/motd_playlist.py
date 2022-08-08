@@ -1,4 +1,5 @@
 import json
+import os
 
 import motd_db
 
@@ -7,6 +8,9 @@ def create_playlist(active=False):
     playlist = {
         "playlistTitle": "Map of the Day (Active)",
         "playlistAuthor": "Map of the Day",
+        "customData": {
+            "syncUrl": os.environ["BS_MOTD_SYNC_URL"]
+        },
         "songs": []
     }
 

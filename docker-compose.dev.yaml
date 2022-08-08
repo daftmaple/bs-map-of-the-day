@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  bs-map-of-the-day:
+    container_name: bs-map-of-the-day
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bs-map-of-the-day
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - 5000:5000
+    volumes:
+      - ./.db:/usr/src/app/.db/
