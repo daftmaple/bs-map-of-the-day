@@ -7,7 +7,6 @@ services:
       context: .
       dockerfile: Dockerfile
     image: bs-map-of-the-day
-    restart: unless-stopped
     env_file: .env
     ports:
       - 5000:5000

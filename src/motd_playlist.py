@@ -3,7 +3,6 @@ import os
 
 import motd_db
 
-
 def create_playlist(active=False):
     playlist = {
         "playlistTitle": "Map of the Day (Active)",
@@ -21,7 +20,11 @@ def create_playlist(active=False):
 
     for lb in lbs:
         playlist["songs"].append(leaderboard_to_json(lb))
-    
+
+    return playlist
+
+def create_playlist_response(active=False):
+    playlist = create_playlist(active)
     playlist_bytes = json.dumps(playlist, indent=2).encode('utf-8')
 
     return playlist_bytes
