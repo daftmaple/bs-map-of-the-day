@@ -1,4 +1,7 @@
-guild = 1001220831306854532
-active_channel = 1001227652335673418
-archived_channel = 1001935176659644497
-test_channel = 1001261748789186621
+import os
+
+# Because guild ID is in int instead of string
+guild = int(os.environ["BS_MOTD_GUILD"])
+active_channel = int(os.environ["BS_MOTD_ACTIVE_CHANNEL"])
+archived_channel = int(os.environ["BS_MOTD_ARCHIVED_CHANNEL"])
+test_channel = int(os.environ["BS_MOTD_TEST_CHANNEL"])

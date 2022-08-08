@@ -18,7 +18,6 @@ import motd_profile
 bot = lightbulb.BotApp(token=os.environ["BS_MOTD_BOT_TOKEN"], prefix=None, default_enabled_guilds=motd_vars.guild)
 tasks.load(bot)
 
-
 @bot.command()
 @lightbulb.option("beatleader_id", "Your BeatLeader profile ID")
 @lightbulb.command("register", "Register your BeatLeader profile ID to join the Map of the Day competitions")
@@ -256,8 +255,8 @@ async def profile(ctx: lightbulb.Context) -> None:
 async def playlist(ctx: lightbulb.Context) -> None:
 	await ctx.respond("Please wait...")
 
-	json_active = motd_playlist.create_playlist(active=True)
-	json_all = motd_playlist.create_playlist(active=False)
+	json_active = motd_playlist.create_playlist_response(active=True)
+	json_all = motd_playlist.create_playlist_response(active=False)
 
 	await ctx.edit_last_response("Attached are up-to-date playlists for Map of the Day", attachments=[hikari.Bytes(json_active, "motd_active.json"), hikari.Bytes(json_all, "motd_all.json")])
 
@@ -347,6 +346,3 @@ async def leaderboard_check():
 				await bot.rest.delete_message(motd_vars.active_channel, lb["message_id"])
 				msg_obj = await bot.rest.create_message(motd_vars.archived_channel, msg)
 				motd_db.update_leaderboard(lb["rowid"], active=0, msg_id=msg_obj.id)
-
-
-bot.run()
