@@ -1,6 +1,7 @@
 import datetime
 import hikari
 import lightbulb
+from lightbulb import checks
 from lightbulb.ext import tasks
 import os
 import re
@@ -88,13 +89,15 @@ async def standings(ctx: lightbulb.Context) -> None:
 
 	filtered_scores = sorted(filtered_scores, key=lambda k: k["accuracy"], reverse=True)
 
+	map_id = json['song']['id'].strip("x")
+
 	msg = f"**Map:** {json['song']['author']} - {json['song']['name']} {json['song']['subName']}\n" \
 		  f"**Difficulty:** {json['difficulty']['modeName']} - {json['difficulty']['difficultyName']}\n" \
 		  f"**Mapper:** {json['song']['mapper']}\n\n" \
 		  f"**Description:** {leaderboard['description']}\n\n" \
 		  f"**Start Time:** <t:{leaderboard['start_time']}>\n" \
 		  f"**End Time:** <t:{leaderboard['end_time']}>\n\n" \
-		  f"**Link:** <https://beatsaver.com/maps/{json['song']['id']}>\n\n" \
+		  f"**Link:** <https://beatsaver.com/maps/{map_id}>\n\n" \
 		  f"**Current Standings:**\n"
 
 	for counter, filtered_score in enumerate(filtered_scores):
@@ -261,7 +264,7 @@ async def playlist(ctx: lightbulb.Context) -> None:
 	await ctx.edit_last_response("Attached are up-to-date playlists for Map of the Day", attachments=[hikari.Bytes(json_active, "motd_active.json"), hikari.Bytes(json_all, "motd_all.json")])
 
 @bot.command()
-@lightbulb.add_checks(lightbulb.owner_only)
+@lightbulb.add_checks(checks.has_role_permissions(hikari.Permissions.ADMINISTRATOR))
 @lightbulb.option("leaderboard_id", "BeatLeader leaderboard ID of the chosen map")
 @lightbulb.option("start_time", "Start time in Unix epoch time", required=False)
 @lightbulb.option("end_time", "End time in Unix epoch time")

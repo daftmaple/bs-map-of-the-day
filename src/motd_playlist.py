@@ -2,6 +2,7 @@ import json
 import os
 
 import motd_db
+import const
 
 def create_playlist(active=False):
     URL_FORMAT = "{}?active={}"
@@ -12,7 +13,8 @@ def create_playlist(active=False):
         "customData": {
             "syncURL": URL_FORMAT.format(os.environ["BS_MOTD_SYNC_URL"], "true" if active else "false")
         },
-        "songs": []
+        "songs": [],
+        "image": const.PLAYLIST_COVER
     }
 
     lbs = motd_db.get_active_leaderboards()
